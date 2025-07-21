@@ -2,19 +2,21 @@ import React from "react";
 
 const Search = ({ searchTerm, setSearchTerm }) => {
   return (
-    <component className="tex-white text-3xl">
+    <div className="search">
       <div>
         <img src="search.svg" alt="search" />
+
         <input
           type="text"
+          placeholder="Search through thousands of movies"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search through thousends of movies"
         />
-        <h1 className="text-white">{searchTerm}</h1>
       </div>
-    </component>
+    </div>
   );
 };
 
 export default Search;
+
+//  404f5bacb661748b92a85f0892e667ef
