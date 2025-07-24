@@ -1,5 +1,3 @@
-import React from "react";
-
 const Search = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className="search">
@@ -16,7 +14,4 @@ const Search = ({ searchTerm, setSearchTerm }) => {
     </div>
   );
 };
-
 export default Search;
-
-//  404f5bacb661748b92a85f0892e667ef

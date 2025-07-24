@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
+import { useDebounce } from "react-use";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -11,7 +12,7 @@ const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${API_KEY}`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MDRmNWJhY2I2NjE3NDhiOTJhODVmMDg5MmU2NjdlZiIsIm5iZiI6MTc1MzA4NTI5NS4xNjksInN1YiI6IjY4N2RmNTZmODA5NzFhNzNhMzUyOGU5ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-BMLYx7BoTUaehCweG3JtoCByxIppPS8FK3D1T3o-vY`,
   },
 };
 
@@ -20,13 +21,16 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [movieList, setMovieList] = useState([]);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState();
+
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   const fetchMovies = async (query = "") => {
     setLoading(true);
     setErrorMessage("");
     try {
       const endpoint = query
-        ? `${API_BASE_URL}/discover/movie?query=${encodeURIComponent(query)}`
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
         : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
 
@@ -51,8 +55,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetchMovies(searchTerm);
-  }, [searchTerm]);
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
 
   return (
     <main>
@@ -69,9 +73,9 @@ function App() {
         <section className="all-movies">
           <h2 className="mt-[40px]">All Movies</h2>
           {loading ? (
-            <p className="text-white">
+            <div className="text-white">
               <Spinner />
-            </p>
+            </div>
           ) : errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
           ) : (
