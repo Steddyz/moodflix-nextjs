@@ -4,6 +4,10 @@ import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
 
+import Hero from "../public/hero.png";
+import SearchIcon from "../public/search.svg";
+import Star from "../public/star.svg";
+
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -63,7 +67,7 @@ function App() {
       <div className="pattern" />
       <div className="wrapper">
         <header>
-          <img src="./hero.png" alt="hero Banner" />
+          <img src={Hero} alt="hero Banner" />
           <h1>
             Find <span className="text-gradient">Movies</span> You&apos;ll Enjoy
             Without the Hassle

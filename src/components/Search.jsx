@@ -1,8 +1,10 @@
+import SearchIcon from "../../public/search.svg";
+
 const Search = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className="search">
       <div>
-        <img src="search.svg" alt="search" />
+        <img src={SearchIcon} alt="search" />
 
         <input
           type="text"
